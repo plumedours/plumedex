@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+// src/components/Header.jsx
+import { Link, NavLink } from "react-router-dom";
 import { useI18n } from "../i18n.jsx";
+import { usePokedex } from "../store/pokedex.jsx";
 
 export default function Header() {
   const { lang, setLang } = useI18n();
+  const { ids } = usePokedex();
   const isFr = lang === "fr";
 
   return (
@@ -16,6 +19,16 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-4">
+          <NavLink
+            to="/mypokedex"
+            className="relative inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-xl border bg-white hover:bg-gray-50"
+          >
+            <span>{isFr ? "Mon Pokédex" : "My Pokédex"}</span>
+            <span className="inline-flex items-center justify-center min-w-5 h-5 rounded-full text-xs px-1 bg-[--color-brand] text-white">
+              {ids.length}
+            </span>
+          </NavLink>
+
           <button
             onClick={() => setLang(isFr ? "en" : "fr")}
             className="text-sm px-3 py-1.5 rounded-xl border bg-white hover:bg-gray-50"
@@ -23,17 +36,6 @@ export default function Header() {
           >
             {isFr ? "FR ▸ EN" : "EN ▸ FR"}
           </button>
-
-          <nav className="text-sm text-gray-600">
-            <a
-              href="https://pokeapi.co"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-gray-900"
-            >
-              PokeAPI
-            </a>
-          </nav>
         </div>
       </div>
     </header>

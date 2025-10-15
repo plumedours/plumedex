@@ -213,3 +213,12 @@ export async function fetchPokemonLocalized(key, lang) {
   basic.weight = pokemon.weight;
   return localizeDetail(basic, lang);
 }
+
+export async function fetchPokemonCard(id, lang) {
+  const res = await fetch(`${API}/pokemon/${id}`);
+  if (!res.ok) throw new Error("Not found");
+  const p = await res.json();
+  const basic = mapPokemonBasic(p);
+  const localized = await localizeBasic(basic, lang);
+  return localized;
+}

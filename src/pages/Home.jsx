@@ -7,6 +7,7 @@ import { useI18n } from "../i18n.jsx";
 import { usePokeSearch } from "../hooks/usePokeSearch.js";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination.jsx";
+import { usePokedex } from "../store/pokedex.jsx";
 
 const PAGE_SIZE = 24;
 
@@ -16,6 +17,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
   const [submitted, setSubmitted] = useState("");
+  const { toggle } = usePokedex();
 
   const { items, total, loading, error } = usePokeList({
     page,
@@ -93,7 +95,7 @@ export default function Home() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
         {gridItems.map((p) => (
-          <PokemonCard key={p.id} {...p} />
+          <PokemonCard key={p.id} {...p} onToggle={() => toggle(p.id)} />
         ))}
       </div>
 
