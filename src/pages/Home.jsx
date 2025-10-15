@@ -6,6 +6,7 @@ import { clamp } from "../utils/format.js";
 import { useI18n } from "../i18n.jsx";
 import { usePokeSearch } from "../hooks/usePokeSearch.js";
 import { Link, useNavigate } from "react-router-dom";
+import Pagination from "../components/Pagination.jsx";
 
 const PAGE_SIZE = 24;
 
@@ -98,26 +99,11 @@ export default function Home() {
 
       {/* Pagination seulement quand il n'y a PAS de recherche dynamique */}
       {!isLive && !submitted && (
-        <div className="flex items-center justify-center gap-2">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(clamp(page - 1, 1, totalPages))}
-            className="px-3 py-1.5 rounded-lg border bg-white disabled:opacity-40"
-          >
-            {t.prev}
-          </button>
-          <span className="text-sm text-gray-600">
-            {t.page} {page} {lang === "fr" ? t.of : ""} {totalPages}{" "}
-            {lang === "fr" ? "" : t.of}
-          </span>
-          <button
-            disabled={page === totalPages}
-            onClick={() => setPage(clamp(page + 1, 1, totalPages))}
-            className="px-3 py-1.5 rounded-lg border bg-white disabled:opacity-40"
-          >
-            {t.next}
-          </button>
-        </div>
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onChange={(p) => setPage(p)}
+        />
       )}
     </section>
   );

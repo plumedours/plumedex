@@ -123,6 +123,7 @@ export function usePokeSearch(query, { limit = 24 } = {}) {
         setItems(basics); // noms non localisés ici; l’écran les localisera comme d’habitude via ton hook liste (ou on remap dans Home)
       } catch (e) {
         // no-op
+        console.log("Error in usePokeSearch.js : " + e)
       } finally {
         if (!cancelled) setLoading(false);
       }

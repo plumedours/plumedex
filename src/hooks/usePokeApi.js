@@ -14,11 +14,28 @@ function pickLocalizedName(entries, lang) {
   return entries?.find((e) => e.language?.name === lang)?.name;
 }
 
+function cleanFlavor(s) {
+  return s
+    ?.replace(/\f/g, " ")
+    .replace(/\u000c/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function pickFlavor(entries, lang) {
-  // entries: [{language:{name:'fr'}, flavor_text:'...'}]
-  return entries
-    ?.find((e) => e.language?.name === lang)
-    ?.flavor_text?.replace(/\f/g, " ");
+  if (!entries?.length) return "";
+  // On parcours à l'envers pour prendre la "plus récente"
+  const byLang = entries
+    .slice()
+    .reverse()
+    .find((e) => e.language?.name === lang)?.flavor_text;
+  if (byLang) return cleanFlavor(byLang);
+  // fallback EN (dernière)
+  const en = entries
+    .slice()
+    .reverse()
+    .find((e) => e.language?.name === "en")?.flavor_text;
+  return cleanFlavor(en || "");
 }
 
 function mapPokemonBasic(p) {
