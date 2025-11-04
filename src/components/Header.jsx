@@ -10,7 +10,7 @@ export default function Header() {
   const isFr = lang === "fr";
 
   return (
-    <header className="bg-white/70 backdrop-blur sticky top-0 z-10 border-b">
+    <header className="bg-white/70 backdrop-blur sticky top-0 z-90 border-b">
       <div className="container mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
         <button
           onClick={() => nav("/")}
