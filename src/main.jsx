@@ -4,16 +4,16 @@ import { HashRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 import { I18nProvider } from "./i18n.jsx";
-import { PokedexProvider } from "./store/pokedex.jsx"; // ⟵ AJOUT
+import { PokedexProvider } from "./store/pokedex.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <I18nProvider>
-      <PokedexProvider>
-        <HashRouter>
+    <HashRouter>
+      <I18nProvider>
+        <PokedexProvider>
           <App />
-        </HashRouter>
-      </PokedexProvider>
-    </I18nProvider>
+        </PokedexProvider>
+      </I18nProvider>
+    </HashRouter>
   </React.StrictMode>
 );

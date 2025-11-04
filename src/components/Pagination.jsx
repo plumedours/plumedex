@@ -18,7 +18,7 @@ export default function Pagination({ page, totalPages, onChange }) {
       <button
         onClick={() => changeTo(1)}
         disabled={page === 1}
-        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40"
+        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40 cursor-pointer"
         title="Première page"
       >
         <span className="material-symbols-rounded text-base">first_page</span>
@@ -28,7 +28,7 @@ export default function Pagination({ page, totalPages, onChange }) {
       <button
         onClick={() => changeTo(page - 1)}
         disabled={page === 1}
-        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40"
+        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40 cursor-pointer"
         title="Page précédente"
       >
         <span className="material-symbols-rounded text-base">chevron_left</span>
@@ -42,7 +42,7 @@ export default function Pagination({ page, totalPages, onChange }) {
       <button
         onClick={() => changeTo(page + 1)}
         disabled={page === totalPages}
-        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40"
+        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40 cursor-pointer"
         title="Page suivante"
       >
         <span className="material-symbols-rounded text-base">
@@ -54,7 +54,7 @@ export default function Pagination({ page, totalPages, onChange }) {
       <button
         onClick={() => changeTo(totalPages)}
         disabled={page === totalPages}
-        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40"
+        className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-1.5 disabled:opacity-40 cursor-pointer"
         title="Dernière page"
       >
         <span className="material-symbols-rounded text-base">last_page</span>
@@ -77,7 +77,7 @@ export default function Pagination({ page, totalPages, onChange }) {
         />
         <button
           onClick={() => changeTo(goto)}
-          className="rounded-lg border bg-white px-3 py-1.5 text-sm hover:bg-gray-50"
+          className="rounded-lg border bg-white px-3 py-1.5 text-sm hover:bg-gray-50 cursor-pointer"
         >
           OK
         </button>

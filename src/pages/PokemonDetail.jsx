@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchPokemonLocalized } from "../hooks/usePokeApi.js";
 import { useI18n } from "../i18n.jsx";
+import { typePillClasses } from "../utils/typeColor.js";
 
 export default function PokemonDetail() {
   const { name: param } = useParams(); // peut être un id (ex: "25") ou un nom ("pikachu")
@@ -64,7 +65,10 @@ export default function PokemonDetail() {
           {data.types.map((t) => (
             <span
               key={t}
-              className="text-xs px-2 py-1 rounded-full bg-gray-100 capitalize"
+              className={`text-xs px-2 py-1 rounded-full capitalize border border-black/5 ring-1 ${typePillClasses(
+                t
+              )}`}
+              title={t}
             >
               {t}
             </span>

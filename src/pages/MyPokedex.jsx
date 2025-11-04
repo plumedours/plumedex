@@ -1,26 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePokedex } from "../store/pokedex.jsx";
 import PokemonCard from "../components/PokemonCard.jsx";
 import { useI18n } from "../i18n.jsx";
 import { fetchPokemonCard } from "../hooks/usePokeApi.js";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MyPokedex() {
   const { lang } = useI18n();
   const { ids: ctxIds, toggle } = usePokedex();
+  const navigate = useNavigate();
 
   // Fallback: si le contexte est vide, on relit le localStorage
-  const safeIds = ctxIds?.length
-    ? ctxIds
-    : (() => {
-        try {
-          const raw = localStorage.getItem("pokedex");
-          const arr = raw ? JSON.parse(raw) : [];
-          return Array.isArray(arr) ? arr : [];
-        } catch {
-          return [];
-        }
-      })();
+  // const safeIds = ctxIds?.length
+  //   ? ctxIds
+  //   : (() => {
+  //       try {
+  //         const raw = localStorage.getItem("pokedex");
+  //         const arr = raw ? JSON.parse(raw) : [];
+  //         return Array.isArray(arr) ? arr : [];
+  //       } catch {
+  //         return [];
+  //       }
+  //     })();
+    const safeIds = useMemo(() => {
+    if (ctxIds?.length) return ctxIds
+    try {
+      const raw = localStorage.getItem("pokedex")
+      const arr = raw ? JSON.parse(raw) : []
+      return Array.isArray(arr) ? arr : []
+    } catch {
+      return []
+    }
+  }, [ctxIds])
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,6 +68,7 @@ export default function MyPokedex() {
         {lang === "fr" ? "Chargement…" : "Loading…"}
       </div>
     );
+
   if (error) {
     return (
       <section className="space-y-4">
@@ -69,6 +81,7 @@ export default function MyPokedex() {
       </section>
     );
   }
+
   if (safeIds.length === 0) {
     return (
       <section className="space-y-4">
@@ -80,12 +93,25 @@ export default function MyPokedex() {
             ? "Votre Pokédex est vide. Parcourez la liste et cliquez sur la pokéball pour ajouter un Pokémon."
             : "Your Pokédex is empty. Browse the list and click the pokéball to add a Pokémon."}
         </p>
-        <Link
+
+        {/* <Link
           to="/"
           className="inline-block px-4 py-2 rounded-xl border bg-white hover:bg-gray-50"
         >
           {lang === "fr" ? "Voir la liste" : "Browse list"}
-        </Link>
+        </Link> */}
+        <button
+        type="button"
+        onClick={() => {
+          // nav router
+          navigate("/");
+          // Fallback “marteau” si jamais quelque chose bloque encore :
+          setTimeout(() => { if (location.hash !== "#/") window.location.hash = "#/"; }, 0);
+        }}
+        className="inline-block px-4 py-2 rounded-xl border bg-white hover:bg-gray-50"
+      >
+        {lang === "fr" ? "Voir la liste" : "Browse list"}
+      </button>
       </section>
     );
   }
